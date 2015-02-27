@@ -1,0 +1,11 @@
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\UnityEditor.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\UnityEngine.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\nunit.framework.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\Mercury\Documents\Voxel Terrain\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\Mercury\Documents\Voxel Terrain\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\Mercury\Documents\Voxel Terrain\obj\Debug\Assembly-CSharp.dll
+C:\Users\Mercury\Documents\Voxel Terrain\obj\Debug\Assembly-CSharp.pdb
