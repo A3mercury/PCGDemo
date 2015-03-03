@@ -1,0 +1,404 @@
+using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+
+public class World : MonoBehaviour
+{
+    public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
+    public GameObject chunkPrefab;
+
+    public static string saveFolderName = "VoxelGameSaves";
+    public string worldName = "world";
+
+    //public int newX = 0;
+    //public int newY = 0;
+    //public int newZ = 0;
+
+    public bool genChunk;
+
+    public WorldPos worldStartPosition;
+    public WorldPos PlayerPos;
+    GameObject Player;
+
+    private int SIZE = 1014;
+    private int mid;
+
+    Chunk[,,] worldChunks;
+
+    public Block[, ,] blocks;
+
+    int yCoordStart = -1;
+    int yCoordEnd = 3;
+
+	// Use this for initialization
+	void Start ()
+    {
+        worldChunks = new Chunk[SIZE, 4, SIZE];
+        //worldStartPosition = GetPotentialStartPosition();
+
+        Player = GameObject.Find("Player");
+        PlayerPos = GetPosition();
+
+        // middle of 3d array
+        mid = SIZE / 2;
+
+        for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
+        {
+            for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+            {
+                for (int y = yCoordStart; y < yCoordEnd; y++)
+                {
+                    int newX = (PlayerPos.x + x) * Chunk.chunkSize;
+                    int newY = (PlayerPos.y + y) * Chunk.chunkSize;
+                    int newZ = (PlayerPos.z + z) * Chunk.chunkSize;
+
+                    worldChunks[mid + x, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+                }
+            }
+        }
+
+
+        //worldChunks = new Chunk[1, 1, 1];
+
+        //worldChunks[0, 0, 0] = CreateChunk(0, 0, 0);
+
+
+	}
+
+    WorldPos GetPosition()
+    {
+        return new WorldPos((int)Player.transform.position.x, 0, (int)Player.transform.position.z);
+    }
+
+	// Update is called once per frame
+	void Update () 
+    {
+        WorldPos CurrPos = GetPosition();
+
+        if (CurrPos.z >= PlayerPos.z + (Chunk.chunkSize / 2))
+            MoveZPlus();
+        else if (CurrPos.z < PlayerPos.z - (Chunk.chunkSize / 2))
+            MoveZMinus();
+        else if (CurrPos.x >= PlayerPos.x + (Chunk.chunkSize / 2))
+            MoveXPlus();
+        else if (CurrPos.x < PlayerPos.x - (Chunk.chunkSize / 2))
+            MoveXMinus();
+
+        //if (Input.GetKeyDown(KeyCode.P))
+        //    DestroyChunk(0, 0, 0);
+	}
+
+    void MoveZPlus()
+    {
+        PlayerPos = GetPosition();
+
+        //Debug.Log("MoveZPlus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
+
+        for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
+        {
+            for (int y = yCoordStart; y < yCoordEnd; y++)
+            {
+                int newX = PlayerPos.x + (x * Chunk.chunkSize);
+                int newY = y * Chunk.chunkSize;
+                int newZ = PlayerPos.z + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
+
+                worldChunks[mid + x, y - yCoordStart, mid] = CreateChunk(newX, newY, newZ);
+                //Debug.Log("x: " + x + " y: " + y + " worldChunks[" + (mid + x) + ", " + (y - yCoordStart) + ", " + mid + ")");
+
+                //Debug.Log("newZ: " + newZ);
+                //if (newZ == 120)
+                //{
+                //    DestroyChunk(newX, newY, newZ);
+                //}
+            }
+        }
+    }
+
+    void MoveZMinus()
+    {
+        PlayerPos = GetPosition();
+
+        Debug.Log("MoveZMinus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
+
+        //for (int x = -(setWidth / 2); x < setWidth / 2; x++)
+        //{
+        for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
+        {
+            for (int y = yCoordStart; y < yCoordEnd; y++)
+            {
+                int newX = PlayerPos.x + (x * Chunk.chunkSize);
+                int newY = y * Chunk.chunkSize;
+                int newZ = PlayerPos.z - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
+
+                worldChunks[mid + x, y - yCoordStart, mid] = CreateChunk(newX, newY, newZ);
+                //Debug.Log("x: " + x + " y: " + y + " worldChunks[" + (mid + x) + ", " + (y - yCoordStart) + ", " + ")");
+
+            }
+        }
+    }
+
+    void MoveXPlus()
+    {
+        PlayerPos = GetPosition();
+
+        Debug.Log("MoveXPlus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
+
+        //for (int z = -(setWidth / 2); z < setWidth / 2; z++)
+        //{
+        for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+        {
+            for (int y = yCoordStart; y < yCoordEnd; y++)
+            {
+                int newX = PlayerPos.x + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
+                int newY = y * Chunk.chunkSize;
+                int newZ = PlayerPos.z + (z * Chunk.chunkSize);
+
+                worldChunks[mid, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+                //Debug.Log("z: " + z + " y: " + y + " worldChunks[" + (mid + z) + ", " + (y - yCoordStart) + ", " + ")");
+
+            }
+        }
+    }
+
+    void MoveXMinus()
+    {
+        PlayerPos = GetPosition();
+
+        Debug.Log("MoveXMinus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
+
+        //for (int z = -(setWidth / 2); z < setWidth / 2; z++)
+        //{
+        for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+        {
+            for (int y = yCoordStart; y < yCoordEnd; y++)
+            {
+                int newX = PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
+                int newY = y * Chunk.chunkSize;
+                int newZ = PlayerPos.z + (z * Chunk.chunkSize);
+
+                worldChunks[mid, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+            }
+        }
+    }
+
+    //void MoveZPlus()
+    //{
+    //    //worldStartPosition.z += setWidth;
+
+    //    //for(int x = -(setWidth / 2); x < setWidth / 2; x++)
+    //    //{
+    //    //    for(int z = -(setWidth / 2); z < setWidth / 2; z++)
+    //    //    {
+    //    //        for (int y = yCoordStart; y < yCoordEnd; y++)
+    //    //        {
+    //    //            newX = (worldStartPosition.x + x) * Chunk.chunkSize;
+    //    //            newY = (worldStartPosition.y + y) * Chunk.chunkSize;
+    //    //            newZ = worldStartPosition.z * Chunk.chunkSize + (Chunk.chunkSize * z);
+
+    //    //            worldChunks[mid + x, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+                    
+    //    //        }
+    //    //    }
+    //    //}
+
+
+    //    PlayerPos = GetPosition();
+
+    //    for(int x = -(setWidth / 2); x < setWidth / 2; x++)
+    //    {
+    //        //for(int z = -(setWidth / 2); z < setWidth / 2; z++)
+    //        //{
+    //            for(int y = yCoordStart; y < yCoordEnd; y++)
+    //            {
+    //                newX = (PlayerPos.x + x) * Chunk.chunkSize;
+    //                newY = (PlayerPos.y + y) * Chunk.chunkSize;
+    //                newZ = PlayerPos.z + (Chunk.chunkSize);
+
+    //                worldChunks[mid + x, y - yCoordStart, mid] = CreateChunk(newX, newY, newZ);
+    //            }
+    //        //}
+    //    }
+    //}
+
+    //void MoveXPlus()
+    //{
+    //    worldStartPosition.x += setWidth;
+
+    //    for (int x = -(setWidth / 2); x < setWidth / 2; x++)
+    //    {
+    //        for (int z = -(setWidth / 2); z < setWidth / 2; z++)
+    //        {
+    //            for (int y = yCoordStart; y < yCoordEnd; y++)
+    //            {
+    //                newX = worldStartPosition.x * Chunk.chunkSize + (Chunk.chunkSize * x);
+    //                newY = (worldStartPosition.y + y) * Chunk.chunkSize;
+    //                newZ = (worldStartPosition.z + z) * Chunk.chunkSize;
+
+    //                worldChunks[mid + x, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+    //            }
+    //        }
+    //    }
+    //}
+
+    //void MoveXMinus()
+    //{
+    //    worldStartPosition.x -= setWidth;
+
+    //    for (int x = -(setWidth / 2); x < setWidth / 2; x++)
+    //    {
+    //        for (int z = -(setWidth / 2); z < setWidth / 2; z++)
+    //        {
+    //            for (int y = yCoordStart; y < yCoordEnd; y++)
+    //            {
+    //                newX = worldStartPosition.x * Chunk.chunkSize + (Chunk.chunkSize * x);
+    //                newY = (worldStartPosition.y + y) * Chunk.chunkSize;
+    //                newZ = (worldStartPosition.z + z) * Chunk.chunkSize;
+
+    //                worldChunks[mid + x, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+    //            }
+    //        }
+    //    }
+    //}
+
+    //void MoveZMinus()
+    //{
+    //    worldStartPosition.z -= setWidth;
+
+    //    for (int x = -(setWidth / 2); x < setWidth / 2; x++)
+    //    {
+    //        for (int z = -(setWidth / 2); z < setWidth / 2; z++)
+    //        {
+    //            for (int y = yCoordStart; y < yCoordEnd; y++)
+    //            {
+    //                newX = (worldStartPosition.x + x) * Chunk.chunkSize;
+    //                newY = (worldStartPosition.y + y) * Chunk.chunkSize;
+    //                newZ = worldStartPosition.z * Chunk.chunkSize + (Chunk.chunkSize * z);
+
+    //                worldChunks[mid + x, y - yCoordStart, mid + z] = CreateChunk(newX, newY, newZ);
+    //            }
+    //        }
+    //    }
+    //}
+
+    WorldPos ConvertCameraPosition()
+    {
+        Vector3 camPos = Camera.main.transform.position;
+        return new WorldPos(
+            (int)Mathf.Round(camPos.x / Chunk.chunkSize) * Chunk.chunkSize, 
+            0,
+            (int)Mathf.Round(camPos.z / Chunk.chunkSize) * Chunk.chunkSize
+        );
+    }
+
+    WorldPos GetPotentialStartPosition()
+    {
+        return new WorldPos(0, 0, 0);
+    }
+
+    public Chunk CreateChunk(int x, int y, int z)
+    {
+        WorldPos worldPos = new WorldPos(x, y, z);
+
+        // Instantiate the chunk at the coordinates using the chunk prefab
+        GameObject newChunkObject = Instantiate(
+                chunkPrefab, new Vector3(x, y, z),
+                Quaternion.Euler(Vector3.zero)
+            ) as GameObject;
+
+        Chunk newChunk = newChunkObject.GetComponent<Chunk>();
+
+        newChunk.pos = worldPos;
+        newChunk.world = this;
+
+        // Add it to the chunks dictionary with the position as the key
+        Chunk chunk = null;
+        //if(chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
+            chunks.Add(worldPos, newChunk);
+
+        var terrainGen = new TerrainGen();
+        newChunk = terrainGen.ChunkGen(newChunk);
+
+        newChunk.SetBlocksUnmodified();
+
+        //Serialization.Load(newChunk);
+
+        return newChunk;
+    }
+
+    public void DestroyChunk(int x, int y, int z /*int i, int j, int k*/)
+    {
+        //Debug.Log("DestroyChunk(" + x + ", " + y + ", " + z + ", " + i + ", " + j + ", " + k + ")");
+        Chunk chunk = null;
+        if(chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
+        {
+            Debug.Log("found?");
+            //Serialization.SaveChunk(chunk);
+            UnityEngine.Object.Destroy(chunk.gameObject);
+            chunks.Remove(new WorldPos(x, y, z));
+            ///worldChunks[i, j, k] = null;
+        }
+    }
+
+    public Chunk GetChunk(int x, int y, int z)
+    {
+        WorldPos pos = new WorldPos();
+        float multiple = Chunk.chunkSize;
+        pos.x = Mathf.FloorToInt(x / multiple) * Chunk.chunkSize;
+        pos.y = Mathf.FloorToInt(y / multiple) * Chunk.chunkSize;
+        pos.z = Mathf.FloorToInt(z / multiple) * Chunk.chunkSize;
+
+        Chunk containerChunk = null;
+
+        chunks.TryGetValue(pos, out containerChunk);
+
+        return containerChunk;
+    }
+
+    public Block GetBlock(int x, int y, int z)
+    {
+        Chunk containerChunk = GetChunk(x, y, z);
+
+        if (containerChunk != null)
+        {
+            Block block = containerChunk.GetBlock(
+                x - containerChunk.pos.x,
+                y - containerChunk.pos.y,
+                z - containerChunk.pos.z);
+
+            return block;
+        }
+        else
+        {
+            return new BlockAir();
+        }
+
+    }
+
+    public void SetBlock(int x, int y, int z, Block block)
+    {
+        Chunk chunk = GetChunk(x, y, z);
+
+        if (chunk != null)
+        {
+            chunk.SetBlock(x - chunk.pos.x, y - chunk.pos.y, z - chunk.pos.z, block);
+            chunk.update = true;
+
+            UpdateIfEqual(x - chunk.pos.x, 0, new WorldPos(x - 1, y, z));
+            UpdateIfEqual(x - chunk.pos.x, Chunk.chunkSize - 1, new WorldPos(x + 1, y, z));
+            UpdateIfEqual(y - chunk.pos.y, 0, new WorldPos(x, y - 1, z));
+            UpdateIfEqual(y - chunk.pos.y, Chunk.chunkSize - 1, new WorldPos(x, y + 1, z));
+            UpdateIfEqual(z - chunk.pos.z, 0, new WorldPos(x, y, z - 1));
+            UpdateIfEqual(z - chunk.pos.z, Chunk.chunkSize - 1, new WorldPos(x, y, z + 1));
+        }
+    }
+
+    void UpdateIfEqual(int value1, int value2, WorldPos pos)
+    {
+        if(value1 == value2)
+        {
+            Chunk chunk = GetChunk(pos.x, pos.y, pos.z);
+            if (chunk != null)
+                chunk.update = true;
+        }
+    } 
+}
