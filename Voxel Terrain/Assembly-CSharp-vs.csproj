@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\TerrainGen.cs" />
      <Compile Include="Assets\Scripts\World.cs" />
      <Compile Include="Assets\Scripts\WorldPos.cs" />
+     <None Include="Assets\Scripts\world unity old.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

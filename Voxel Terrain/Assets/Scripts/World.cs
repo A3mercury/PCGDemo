@@ -14,7 +14,7 @@ public class World : MonoBehaviour
 
     public bool genChunk;
 
-    const int SIZE = 1014;
+    const int SIZE = 4086;
     const int HALF = SIZE / 2;
     const int YSTART = -1;
     const int YEND = 3;
@@ -23,9 +23,13 @@ public class World : MonoBehaviour
     int newY = 0;
     int newZ = 0;
 
+    static int wcX;
+    static int wcY;
+    static int wcZ;
+
     void Start()
     {
-        worldChunks = new Chunk[SIZE, 4, SIZE];
+        //worldChunks = new Chunk[SIZE, 4, SIZE];
 
         Player = GameObject.Find("Player");
         PlayerPos = GetPlayerPos();
@@ -41,34 +45,31 @@ public class World : MonoBehaviour
                     newY = (PlayerPos.y + y) * Chunk.chunkSize;
                     newZ = (PlayerPos.z + z) * Chunk.chunkSize;
 
-                    worldChunks[HALF + x, y - YSTART, HALF + z] = CreateChunk(newX, newY, newZ);
+                    wcX = HALF + x;
+                    wcY = y - YSTART;
+                    wcZ = HALF + z;
+
+                    /*worldChunks[wcX, wcY, wcZ] = */CreateChunk(newX, newY, newZ);
+                    //Debug.Log("worldChunks[" + wcX + ", " + wcY + ", " + wcZ + "]");
                 }
             }
         }
-
-
     }
 
     void Update()
     {
         WorldPos CurrPos = GetPlayerPos();
 
-        if (CurrPos.z >= PlayerPos.z + (Chunk.chunkSize / 2))
+        if (CurrPos.z >= PlayerPos.z + (Chunk.chunkSize))
             MoveZPlus();
-        else if (CurrPos.z < PlayerPos.z - (Chunk.chunkSize / 2))
-            MoveZMinus();
-        else if (CurrPos.x >= PlayerPos.x + (Chunk.chunkSize / 2))
+        //if (CurrPos.z < PlayerPos.z - (Chunk.chunkSize))
+        //    MoveZMinus();
+        if (CurrPos.x >= PlayerPos.x + (Chunk.chunkSize))
             MoveXPlus();
-        else if (CurrPos.x < PlayerPos.x - (Chunk.chunkSize / 2))
+        if (CurrPos.x < PlayerPos.x - (Chunk.chunkSize))
             MoveXMinus();
-    }
 
-    WorldPos GetPlayerPos()
-    {
-        // returns player position wherever in the game
-        return new WorldPos((int)Player.transform.position.x,
-                            (int)Player.transform.position.y,
-                            (int)Player.transform.position.z);
+        //Debug.Log(PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z);
     }
 
     void MoveZPlus()
@@ -83,36 +84,17 @@ public class World : MonoBehaviour
                 newY = y * Chunk.chunkSize;
                 newZ = PlayerPos.z + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
 
-                worldChunks[HALF + x, y - YSTART, HALF] = CreateChunk(newX, newY, newZ);
+                CreateChunk(newX, newY, newZ);
 
-                //Debug.Log("newZ: " + newZ);
-                //if (newZ == 120)
-                //{
-                //    DestroyChunk(newX, newY, newZ);
-                //}
-            }
-        }
-    }
-
-    void MoveZMinus()
-    {
-        PlayerPos = GetPlayerPos();
-
-        Debug.Log("MoveZMinus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
-
-        //for (int x = -(setWidth / 2); x < setWidth / 2; x++)
-        //{
-        for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
-        {
-            for (int y = YSTART; y < YEND; y++)
-            {
-                newX = PlayerPos.x + (x * Chunk.chunkSize);
-                newY = y * Chunk.chunkSize;
-                newZ = PlayerPos.z - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
-
-                worldChunks[HALF + x, y - YSTART, HALF] = CreateChunk(newX, newY, newZ);
-                //Debug.Log("x: " + x + " y: " + y + " worldChunks[" + (mid + x) + ", " + (y - yCoordStart) + ", " + ")");
-
+                if (x == -(Chunk.chunkSize / 2))
+                    for (int d = x; d < Chunk.chunkSize / 2; d++)
+                    {
+                        DestroyChunk(
+                            PlayerPos.x + (d * Chunk.chunkSize),
+                            newY,
+                            PlayerPos.z - Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize
+                            );
+                    }
             }
         }
     }
@@ -121,10 +103,6 @@ public class World : MonoBehaviour
     {
         PlayerPos = GetPlayerPos();
 
-        Debug.Log("MoveXPlus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
-
-        //for (int z = -(setWidth / 2); z < setWidth / 2; z++)
-        //{
         for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
         {
             for (int y = YSTART; y < YEND; y++)
@@ -133,9 +111,17 @@ public class World : MonoBehaviour
                 newY = y * Chunk.chunkSize;
                 newZ = PlayerPos.z + (z * Chunk.chunkSize);
 
-                worldChunks[HALF, y - YSTART, HALF + z] = CreateChunk(newX, newY, newZ);
-                //Debug.Log("z: " + z + " y: " + y + " worldChunks[" + (mid + z) + ", " + (y - yCoordStart) + ", " + ")");
+                CreateChunk(newX, newY, newZ);
 
+                if (z == -(Chunk.chunkSize / 2))
+                    for (int d = z; d < Chunk.chunkSize / 2; d++)
+                    {
+                        DestroyChunk(
+                            PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize,
+                            newY,
+                            PlayerPos.z + (d * Chunk.chunkSize)
+                            );
+                    }
             }
         }
     }
@@ -144,22 +130,167 @@ public class World : MonoBehaviour
     {
         PlayerPos = GetPlayerPos();
 
-        Debug.Log("MoveXMinus() PlayerPos(" + PlayerPos.x + ", " + PlayerPos.y + ", " + PlayerPos.z + ")");
-
-        //for (int z = -(setWidth / 2); z < setWidth / 2; z++)
-        //{
-        for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+        for(int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
         {
-            for (int y = YSTART; y < YEND; y++)
+            for(int y = YSTART; y < YEND; y++)
             {
                 newX = PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
                 newY = y * Chunk.chunkSize;
                 newZ = PlayerPos.z + (z * Chunk.chunkSize);
 
-                worldChunks[HALF, y - YSTART, HALF + z] = CreateChunk(newX, newY, newZ);
+                CreateChunk(newX, newY, newZ);
+                 
+                if(z == (Chunk.chunkSize / 2) - 1)
+                {
+                    for(int d = -(Chunk.chunkSize / 2); d < z; d++)
+                    {
+                        DestroyChunk(
+                            ((PlayerPos.x - 128 - Chunk.chunkSize) * -1),
+                            newY,
+                            PlayerPos.z + (d * Chunk.chunkSize)
+                            );
+                    }
+                }
             }
         }
     }
+
+    //void MoveZPlus()
+    //{
+    //    PlayerPos = GetPlayerPos();
+    //    for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
+    //    {
+    //        for (int y = YSTART; y < YEND; y++)
+    //        {
+    //            newX = PlayerPos.x + (x * Chunk.chunkSize);
+    //            newY = y * Chunk.chunkSize;
+    //            newZ = PlayerPos.z + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
+
+    //            wcZ++;
+
+    //            //Debug.Log("worldChunks[" + wcX + ", " + wcY + ", " + wcZ + "]");
+
+    //            //if (worldChunks[wcX, wcY, wcZ] != GetChunk(newX, newY, newZ))
+    //            worldChunks[wcX, wcY, wcZ] = CreateChunk(newX, newY, newZ);
+
+    //            if (x == -(Chunk.chunkSize / 2))
+    //                for (int d = x; d < Chunk.chunkSize / 2; d++)
+    //                {
+    //                    //Debug.Log("deleteZ x: " + wcX + " y: " + wcY + " z: " + (wcZ - Chunk.chunkSize));
+    //                    worldChunks[wcX, wcY, wcZ - Chunk.chunkSize] = DestroyChunk(
+    //                        PlayerPos.x + (d * Chunk.chunkSize),
+    //                        newY,
+    //                        PlayerPos.z - Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize
+    //                        );
+    //                }
+    //        }
+    //    }
+    //}
+
+    //void MoveZMinus()
+    //{
+    //    PlayerPos = GetPlayerPos();
+
+    //    for (int x = -(Chunk.chunkSize / 2); x < Chunk.chunkSize / 2; x++)
+    //    {
+    //        for (int y = YSTART; y < YEND; y++)
+    //        {
+    //            newX = PlayerPos.x + (x * Chunk.chunkSize);
+    //            newY = y * Chunk.chunkSize;
+    //            newZ = PlayerPos.z - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
+
+    //            if (worldChunks[HALF + x, y - YSTART, HALF] != GetChunk(newX, newY, newZ) || x == (Chunk.chunkSize / 2))
+    //                worldChunks[HALF + x, y - YSTART, HALF] = CreateChunk(newX, newY, newZ);
+
+    //            if (x == Chunk.chunkSize / 2)
+    //                for (int d = -(Chunk.chunkSize / 2); d < Chunk.chunkSize / 2; d++)
+    //                    worldChunks[HALF + x, y - YSTART, HALF] = DestroyChunk(
+    //                        PlayerPos.x + (d * Chunk.chunkSize),
+    //                        newY,
+    //                        PlayerPos.z + Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize
+    //                    );
+    //        }
+    //    }
+    //}
+
+    //void MoveXPlus()
+    //{
+    //    PlayerPos = GetPlayerPos();
+
+    //    for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+    //    {
+    //        for (int y = YSTART; y < YEND; y++)
+    //        {
+    //            newX = PlayerPos.x + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
+    //            newY = y * Chunk.chunkSize;
+    //            newZ = PlayerPos.z + (z * Chunk.chunkSize);
+
+    //            wcX++;
+
+    //            //Debug.Log("worldChunks[" + wcX + ", " + wcY + ", " + wcZ + "]");
+
+    //            worldChunks[wcX, wcY, wcZ] = CreateChunk(newX, newY, newZ);
+
+    //            if (z == -(Chunk.chunkSize / 2))
+    //                for (int d = z; d < Chunk.chunkSize / 2; d++)
+    //                {
+    //                    //Debug.Log("deleteX x: " + (wcX - Chunk.chunkSize) + " y: " + wcY + " z: " + wcZ);
+    //                    /*worldChunks[wcX - Chunk.chunkSize, wcY, wcZ] = */
+    //                    DestroyChunk(
+    //                        PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize,
+    //                        newY,
+    //                        PlayerPos.z + (d * Chunk.chunkSize)
+    //                        );
+    //                }
+    //        }
+    //    }
+
+    //    //for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+    //    //{
+    //    //    for (int y = YSTART; y < YEND; y++)
+    //    //    {
+    //    //        newX = PlayerPos.x + Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize;
+    //    //        newY = y * Chunk.chunkSize;
+    //    //        newZ = PlayerPos.z + (z * Chunk.chunkSize);
+
+    //    //        if (worldChunks[HALF + z, y - YSTART, HALF + z] != GetChunk(newX, newY, newZ) || z == -(Chunk.chunkSize / 2))
+    //    //            worldChunks[HALF + z, y - YSTART, HALF + z] = CreateChunk(newX, newY, newZ);
+
+    //    //        if (z == -(Chunk.chunkSize / 2))
+    //    //            for (int d = z; d < Chunk.chunkSize / 2; d++)
+    //    //                worldChunks[HALF, y - YSTART, HALF + z] = DestroyChunk(
+    //    //                    PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) - Chunk.chunkSize,
+    //    //                    newY,
+    //    //                    PlayerPos.z + (d * Chunk.chunkSize)
+    //    //                );
+
+
+    //    //        // bottom left chunk
+    //    //        if (z == -(Chunk.chunkSize / 2))
+    //    //            Debug.Log("worldChunks[" + (HALF + z) + ", " + (y - YSTART) + ", " + HALF + "]");
+    //    //    }
+    //    //}
+    //}
+
+    //void MoveXMinus()
+    //{
+    //    PlayerPos = GetPlayerPos();
+
+    //    for (int z = -(Chunk.chunkSize / 2); z < Chunk.chunkSize / 2; z++)
+    //    {
+    //        for (int y = YSTART; y < YEND; y++)
+    //        {
+    //            newX = PlayerPos.x - Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize;
+    //            newY = y * Chunk.chunkSize;
+    //            newZ = PlayerPos.z + (z * Chunk.chunkSize);
+
+    //            if (worldChunks[HALF, y - YSTART, HALF + z] != GetChunk(newX, newY, newZ))
+    //                worldChunks[HALF, y - YSTART, HALF + z] = CreateChunk(newX, newY, newZ);
+
+    //            //DestroyChunk(PlayerPos.x + Chunk.chunkSize * (Chunk.chunkSize / 2) + Chunk.chunkSize, newY, newZ);
+    //        }
+    //    }
+    //}
 
     WorldPos ConvertCameraPosition()
     {
@@ -169,6 +300,14 @@ public class World : MonoBehaviour
                             (int)Mathf.Round(camPos.z / Chunk.chunkSize) * Chunk.chunkSize);
     }
 
+    WorldPos GetPlayerPos()
+    {
+        // returns player position wherever in the game
+        return new WorldPos((int)Player.transform.position.x,
+                            0,
+                            (int)Player.transform.position.z);
+    }
+
     WorldPos GetPotentialStartPosition()
     {
         return GetPlayerPos();
@@ -176,6 +315,9 @@ public class World : MonoBehaviour
 
     public Chunk CreateChunk(int x, int y, int z)
     {
+        //if (y == 0)
+        //    Debug.Log("create " + x + ", 0, " + z);
+
         // assign a new world position with the values passed
         WorldPos worldPos = new WorldPos(x, y, z);
 
@@ -199,14 +341,24 @@ public class World : MonoBehaviour
         return newChunk;
     }
 
-    public void DestroyChunk(int x, int y, int z)
+    public Chunk DestroyChunk(int x, int y, int z)
     {
+        Chunk c = GetChunk(x, y, z);
+        
+        if (y == 0)
+            Debug.Log("Destroy: " + x + ", " + y + ", " + z);
+
         Chunk chunk = null;
         if(chunks.TryGetValue(new WorldPos(x, y, z), out chunk))
         {
             UnityEngine.Object.Destroy(chunk.gameObject);
             chunks.Remove(new WorldPos(x, y, z));
+            //worldChunks[i, j, k] = null;
+
+            return null;
         }
+
+        return c;
     }
 
     public Chunk GetChunk(int x, int y, int z)

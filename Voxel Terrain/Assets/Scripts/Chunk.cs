@@ -20,8 +20,12 @@ public class Chunk : MonoBehaviour
 
     MeshData meshData;
 
+    public Vector3 ChunkPosition;
+
     void Start()
     {
+
+
         filter = gameObject.GetComponent<MeshFilter>();
         coll = gameObject.GetComponent<MeshCollider>();
     }
