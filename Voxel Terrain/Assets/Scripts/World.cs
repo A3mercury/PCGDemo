@@ -6,26 +6,22 @@ public class World : MonoBehaviour
 {
     public Dictionary<WorldPos, Chunk> chunks = new Dictionary<WorldPos, Chunk>();
 
-    Chunk[, ,] worldChunks;
+    //Chunk[, ,] worldChunks;
 
     public WorldPos PlayerPos;
     public GameObject Player;
     public GameObject chunkPrefab;
 
-    public bool genChunk;
+    //public bool genChunk;
 
-    const int SIZE = 4086;
-    const int HALF = SIZE / 2;
+    //const int SIZE = 4086;
+    //const int HALF = SIZE / 2;
     const int YSTART = -1;
     const int YEND = 3;
 
     int newX = 0;
     int newY = 0;
     int newZ = 0;
-
-    static int wcX;
-    static int wcY;
-    static int wcZ;
 
     void Start()
     {
@@ -45,12 +41,7 @@ public class World : MonoBehaviour
                     newY = (PlayerPos.y + y) * Chunk.chunkSize;
                     newZ = (PlayerPos.z + z) * Chunk.chunkSize;
 
-                    wcX = HALF + x;
-                    wcY = y - YSTART;
-                    wcZ = HALF + z;
-
-                    /*worldChunks[wcX, wcY, wcZ] = */CreateChunk(newX, newY, newZ);
-                    //Debug.Log("worldChunks[" + wcX + ", " + wcY + ", " + wcZ + "]");
+                    CreateChunk(newX, newY, newZ);
                 }
             }
         }
@@ -88,8 +79,12 @@ public class World : MonoBehaviour
 
                 if (x == -(Chunk.chunkSize / 2))
                 {
-                    while(PlayerPos.x % 16 != 0)
+                    while (PlayerPos.x % Chunk.chunkSize != 0)
                         PlayerPos.x--;
+                    while (PlayerPos.z % Chunk.chunkSize != 0)
+                        PlayerPos.z++;
+
+                    Debug.Log("PlayerPos: " + PlayerPos.x + " " + PlayerPos.z);
 
                     for (int d = x; d < Chunk.chunkSize / 2; d++)
                     {
@@ -120,8 +115,12 @@ public class World : MonoBehaviour
 
                 if (z == -(Chunk.chunkSize / 2))
                 {
-                    while (PlayerPos.z % 16 != 0)
+                    while (PlayerPos.z % Chunk.chunkSize != 0)
                         PlayerPos.z--;
+                    while (PlayerPos.x % Chunk.chunkSize != 0)
+                        PlayerPos.x++;
+
+                    Debug.Log("PlayerPos: " + PlayerPos.x + " " + PlayerPos.z);
 
                     for (int d = z; d < Chunk.chunkSize / 2; d++)
                     {
@@ -157,7 +156,6 @@ public class World : MonoBehaviour
 
                     for(int d = -(Chunk.chunkSize / 2); d <= z; d++)
                     {
-                        Debug.Log("PPx " + PlayerPos.x);
                         DestroyChunk(
                             PlayerPos.x + Chunk.chunkSize * (Chunk.chunkSize / 2),
                             newY,
@@ -213,7 +211,7 @@ public class World : MonoBehaviour
         var terrainGen = new TerrainGen();
         newChunk = terrainGen.ChunkGen(newChunk);
 
-        newChunk.SetBlocksUnmodified();
+        //newChunk.SetBlocksUnmodified();
 
         return newChunk;
     }
@@ -221,9 +219,9 @@ public class World : MonoBehaviour
     public Chunk DestroyChunk(int x, int y, int z)
     {
         Chunk c = GetChunk(x, y, z);
-        
-        if (y == 0)
-            Debug.Log("Destroy: " + x + ", " + y + ", " + z);
+
+        //if (y == 0)
+        //    Debug.Log("Destroy: " + x + ", " + y + ", " + z);
 
         Chunk chunk = null;
         if(chunks.TryGetValue(new WorldPos(x, y, z), out chunk))

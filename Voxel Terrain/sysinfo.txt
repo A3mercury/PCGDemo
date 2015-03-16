@@ -21,182 +21,140 @@ User locale: en-US
 System locale: en-US
 
 Running processes:
-NvBackend.exe (3044)
+NvBackend.exe (3068)
     path: C:\Program Files (x86)\NVIDIA Corporation\Update Core\NvBackend.exe
     company:  NVIDIA Corporation
     product:  NVIDIA GeForce Experience
     filedesc: NVIDIA GeForce Experience Backend
     filever:  16.13.56.0
     prodver:  16.13.56.0
-SpotifyWebHelper.exe (3120)
-    path: C:\Users\Mercury\AppData\Roaming\Spotify\Data\SpotifyWebHelper.exe
-    company:  Spotify Ltd
-    product:  Spotify
-    filedesc: SpotifyWebHelper
-    filever:  0.9.15.27
-    prodver:  0.9.15.27
-ONENOTEM.EXE (3416)
-    path: C:\Program Files\Microsoft Office 15\root\office15\ONENOTEM.EXE
-    company:  Microsoft Corporation
-    product:  Microsoft OneNote
-    filedesc: Send to OneNote Tool
-    filever:  15.0.4645.1000
-    prodver:  15.0.4645.0
-RzSynapse.exe (3448)
-    path: C:\Program Files (x86)\Razer\Synapse\RzSynapse.exe
-    company:  Razer Inc.
-    product:  Razer Synapse
-    filedesc: Razer Synapse
-    filever:  1.18.18.23036
-    prodver:  1.18.18.23036
-jusched.exe (3456)
-    path: C:\Program Files (x86)\Common Files\Java\Java Update\jusched.exe
-    company:  Oracle Corporation
-    product:  Java Platform SE Auto Updater
-    filedesc: Java Update Scheduler
-    filever:  2.8.25.18
-    prodver:  2.8.25.18
-Creative Cloud.exe (3476)
-    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\ACC\Creative Cloud.exe
-    company:  Adobe Systems Incorporated
-    product:  Adobe Creative Cloud
-    filedesc: Adobe Creative Cloud
-    filever:  2.8.1.451
-    prodver:  2.8.1.451
-AdobeIPCBroker.exe (3320)
-    path: C:\Program Files (x86)\Common Files\Adobe\OOBE\PDApp\IPC\AdobeIPCBroker.exe
-    company:  Adobe Systems Incorporated
-    product:  Adobe IPC Broker
-    filedesc: Adobe IPC Broker
-    filever:  5.0.0.87
-    prodver:  5.0.0.87
-RzStats.Manager.exe (3440)
-    path: C:\ProgramData\Razer\Synapse\RzStats\RzStats.Manager.exe
-    company:  
-    product:  RzStats.Manager
-    filedesc: RzStats.Manager
-    filever:  1.0.0.32
-    prodver:  1.0.0.32
-RazerIngameEngine.exe (980)
-    path: C:\Program Files (x86)\Razer\InGameEngine\32bit\RazerIngameEngine.exe
-    company:  Razer, Inc.
-    product:  
-    filedesc: RazerIngameEngine
-    filever:  1.0.12.3915
-    prodver:  1.0.12.3915
-CoreSync.exe (4196)
-    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\CoreSync\CoreSync.exe
-    company:  
-    product:  CoreSync
-    filedesc: Core Sync
-    filever:  1.3.1.405
-    prodver:  1.3.1.405
-RzCefRenderProcess.exe (4716)
-    path: C:\Users\Mercury\AppData\Local\razer\InGameEngine\cache\RzStats.Manager\RzCefRenderProcess.exe
-    company:  Razer, Inc.
-    product:  
-    filedesc: Razer Chromium Render Process
-    filever:  1.0.12.3915
-    prodver:  1.0.12.3915
-chrome.exe (4156)
-    path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    company:  Google Inc.
-    product:  Google Chrome
-    filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-chrome.exe (4944)
-    path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    company:  Google Inc.
-    product:  Google Chrome
-    filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-chrome.exe (5220)
-    path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    company:  Google Inc.
-    product:  Google Chrome
-    filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-chrome.exe (5228)
-    path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    company:  Google Inc.
-    product:  Google Chrome
-    filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-Adobe CEF Helper.exe (5612)
-    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\HEX\Adobe CEF Helper.exe
-    company:  Adobe Systems Incorporated
-    product:  Adobe CEF Helper
-    filedesc: Adobe CEF Helper
-    filever:  2.8.0.446
-    prodver:  2.8.0.446
-jucheck.exe (752)
-    path: C:\Program Files (x86)\Common Files\Java\Java Update\jucheck.exe
-    company:  Oracle Corporation
-    product:  Java Platform SE Auto Updater
-    filedesc: Java Update Checker
-    filever:  2.8.25.18
-    prodver:  2.8.25.18
-AAM Updates Notifier.exe (1732)
+AAM Updates Notifier.exe (3312)
     path: C:\Program Files (x86)\Common Files\Adobe\OOBE\PDApp\UWA\AAM Updates Notifier.exe
     company:  Adobe Systems Incorporated
     product:  AAM Updates Notifier Application
     filedesc: AAM Updates Notifier Application
     filever:  8.0.0.162
     prodver:  8.0.0.162
-chrome.exe (6288)
+SpotifyWebHelper.exe (3468)
+    path: C:\Users\Mercury\AppData\Roaming\Spotify\Data\SpotifyWebHelper.exe
+    company:  Spotify Ltd
+    product:  Spotify
+    filedesc: SpotifyWebHelper
+    filever:  0.9.15.27
+    prodver:  0.9.15.27
+RzSynapse.exe (3852)
+    path: C:\Program Files (x86)\Razer\Synapse\RzSynapse.exe
+    company:  Razer Inc.
+    product:  Razer Synapse
+    filedesc: Razer Synapse
+    filever:  1.18.18.23036
+    prodver:  1.18.18.23036
+Creative Cloud.exe (3904)
+    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\ACC\Creative Cloud.exe
+    company:  Adobe Systems Incorporated
+    product:  Adobe Creative Cloud
+    filedesc: Adobe Creative Cloud
+    filever:  2.8.1.451
+    prodver:  2.8.1.451
+chrome.exe (4272)
     path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
     company:  Google Inc.
     product:  Google Chrome
     filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-chrome.exe (4476)
+    filever:  41.0.2272.76
+    prodver:  41.0.2272.76
+chrome.exe (4388)
     path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
     company:  Google Inc.
     product:  Google Chrome
     filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-chrome.exe (7256)
+    filever:  41.0.2272.76
+    prodver:  41.0.2272.76
+chrome.exe (4464)
     path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
     company:  Google Inc.
     product:  Google Chrome
     filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-Unity.exe (8372)
+    filever:  41.0.2272.76
+    prodver:  41.0.2272.76
+AdobeIPCBroker.exe (4652)
+    path: C:\Program Files (x86)\Common Files\Adobe\OOBE\PDApp\IPC\AdobeIPCBroker.exe
+    company:  Adobe Systems Incorporated
+    product:  Adobe IPC Broker
+    filedesc: Adobe IPC Broker
+    filever:  5.0.0.87
+    prodver:  5.0.0.87
+RzStats.Manager.exe (3912)
+    path: C:\ProgramData\Razer\Synapse\RzStats\RzStats.Manager.exe
+    company:  
+    product:  RzStats.Manager
+    filedesc: RzStats.Manager
+    filever:  1.0.0.32
+    prodver:  1.0.0.32
+RazerIngameEngine.exe (2656)
+    path: C:\Program Files (x86)\Razer\InGameEngine\32bit\RazerIngameEngine.exe
+    company:  Razer, Inc.
+    product:  
+    filedesc: RazerIngameEngine
+    filever:  1.0.12.3915
+    prodver:  1.0.12.3915
+CoreSync.exe (5308)
+    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\CoreSync\CoreSync.exe
+    company:  
+    product:  CoreSync
+    filedesc: Core Sync
+    filever:  1.3.1.405
+    prodver:  1.3.1.405
+RzCefRenderProcess.exe (5816)
+    path: C:\Users\Mercury\AppData\Local\razer\InGameEngine\cache\RzStats.Manager\RzCefRenderProcess.exe
+    company:  Razer, Inc.
+    product:  
+    filedesc: Razer Chromium Render Process
+    filever:  1.0.12.3915
+    prodver:  1.0.12.3915
+Adobe CEF Helper.exe (5348)
+    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\HEX\Adobe CEF Helper.exe
+    company:  Adobe Systems Incorporated
+    product:  Adobe CEF Helper
+    filedesc: Adobe CEF Helper
+    filever:  2.8.0.446
+    prodver:  2.8.0.446
+Adobe CEF Helper.exe (3996)
+    path: C:\Program Files (x86)\Adobe\Adobe Creative Cloud\HEX\Adobe CEF Helper.exe
+    company:  Adobe Systems Incorporated
+    product:  Adobe CEF Helper
+    filedesc: Adobe CEF Helper
+    filever:  2.8.0.446
+    prodver:  2.8.0.446
+Unity.exe (15296)
     path: E:\UNITY\Editor\Unity.exe
     company:  Unity Technologies ApS
     product:  Unity
     filedesc: Unity Editor
     filever:  4.5.5.37569
     prodver:  4.5.5.37569
-chrome.exe (6392)
-    path: C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    company:  Google Inc.
-    product:  Google Chrome
-    filedesc: Google Chrome
-    filever:  40.0.2214.93
-    prodver:  40.0.2214.93
-devenv.exe (5868)
+devenv.exe (15064)
     path: C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe
     company:  Microsoft Corporation
     product:  Microsoft® Visual Studio® 2013
     filedesc: Microsoft Visual Studio 2013
     filever:  12.0.30723.0
     prodver:  12.0.30723.0
-Microsoft.Alm.Shared.Remoting.RemoteContainer.dll (7724)
+Microsoft.Alm.Shared.Remoting.RemoteContainer.dll (10384)
     path: C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Alm.Shared.Remoting.RemoteContainer\v4.0_12.0.0.0__b03f5f7f11d50a3a\Microsoft.Alm.Shared.Remoting.RemoteContainer.dll
     company:  Microsoft Corporation
     product:  Microsoft® Visual Studio® 2013
     filedesc: Microsoft.Alm.Shared.Remoting.RemoteContainer.dll
     filever:  12.0.30501.0
     prodver:  12.0.30501.0
-UnityBugReporter.exe (9088)
+Microsoft.Alm.Shared.Remoting.RemoteContainer.dll (15216)
+    path: C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Alm.Shared.Remoting.RemoteContainer\v4.0_12.0.0.0__b03f5f7f11d50a3a\Microsoft.Alm.Shared.Remoting.RemoteContainer.dll
+    company:  Microsoft Corporation
+    product:  Microsoft® Visual Studio® 2013
+    filedesc: Microsoft.Alm.Shared.Remoting.RemoteContainer.dll
+    filever:  12.0.30501.0
+    prodver:  12.0.30501.0
+UnityBugReporter.exe (14072)
     path: E:\UNITY\Editor\UnityBugReporter.exe
     company:  Unity Technologies ApS
     product:  Unity Bug Reporter
